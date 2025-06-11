@@ -85,8 +85,8 @@ in
   programs.kdeconnect.enable = true;
   programs.spicetify = {
     enable = true;
-    theme = spicePkgs.themes.catppuccin;
-    colorScheme = "macchiato";
+    theme = spicePkgs.themes.comfy;
+    colorScheme = "yami";
     enabledExtensions = with spicePkgs.extensions; [
       adblock
 	    ];
@@ -162,12 +162,15 @@ in
      inputs.yt-x.packages."${system}".default
      yt-dlp
      jp2a
-     python311
-     (python311.withPackages (ps: with ps; [
-       pygame
+     python312
+     (python312.withPackages (ps: with ps; [
+      cmake
+	
      ]))
      kando
      rofi-wayland
+     gnumake
+
     ];
 
 nixpkgs.config = {
