@@ -46,18 +46,9 @@ in
 
   services = {
     	xserver.enable = true;
-    	displayManager.sddm = { 
-        enable = true;
-        theme = "maya";
-        extraPackages = with pkgs; [
-          qt6Packages.qtmultimedia 
-          qt6Packages.qtsvg        
-          qt6Packages.qtvirtualkeyboard
-        ];
-       };
+    	displayManager.sddm.enable=true;
         desktopManager.plasma6.enable = true;
-          
-   };
+         }; 
 
   
   # Configure keymap in X11
@@ -104,7 +95,13 @@ in
       pointer
       ];
   };
+programs.hyprland = {
+     enable = true;
+     xwayland.enable = true;
 
+};
+xdg.portal.enable = true;
+xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   
   # List packages installed in system profile.
@@ -117,7 +114,7 @@ in
      btop
      xwallpaper
      discord
-     libsForQt5.dolphin
+     kdePackages.dolphin
      fastfetch
      fortune
      pipes
@@ -152,7 +149,8 @@ in
      kdePackages.kcharselect
      kdePackages.partitionmanager
      vesktop
-     libsForQt5.filelight
+     kdePackages.filelight
+     kdePackages.kate
      aria2
      wineWowPackages.stable
      ffmpeg
@@ -171,12 +169,17 @@ in
      inputs.yt-x.packages."${system}".default
      yt-dlp
      jp2a
-     python314
-     (python314.withPackages (ps: with ps; [
+     python311
+     (python311.withPackages (ps: with ps; [
        pygame
      ]))
-     
-
+     kando
+     eww
+     waybar
+     dunst
+     libnotify
+     swww
+     rofi-wayland
     ];
 
 nixpkgs.config = {
@@ -254,4 +257,3 @@ boot.kernel.sysctl = { "vm.swappiness" = 10;};
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-
