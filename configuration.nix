@@ -95,13 +95,6 @@ in
       pointer
       ];
   };
-programs.hyprland = {
-     enable = true;
-     xwayland.enable = true;
-
-};
-xdg.portal.enable = true;
-xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   
   # List packages installed in system profile.
@@ -174,11 +167,6 @@ xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
        pygame
      ]))
      kando
-     eww
-     waybar
-     dunst
-     libnotify
-     swww
      rofi-wayland
     ];
 
