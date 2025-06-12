@@ -7,12 +7,16 @@
         url = "github:Benexl/yt-x";
         inputs.nixpkgs.follows = "nixpkgs";
       };  
+    trmt.url = "github:cenonym/trmt";
   };
-  outputs = { self, nixpkgs, spicetify-nix, ... }@inputs: 
+  outputs = { self, nixpkgs, spicetify-nix, trmt, ... }@inputs: 
    
   {
        nixosConfigurations.za-warudo = nixpkgs.lib.nixosSystem {
          modules = [
+          ({ pkgs, ... }: {
+          environment.systemPackages = [ trmt.packages.${pkgs.system}.default ];
+        })
           ./configuration.nix
           spicetify-nix.nixosModules.default
           ];     
