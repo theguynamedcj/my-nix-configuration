@@ -82,11 +82,13 @@ in
   programs.firefox.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+  programs.gamemode.enable = true;
   programs.kdeconnect.enable = true;
   programs.spicetify = {
     enable = true;
     theme = spicePkgs.themes.comfy;
-    colorScheme = "yami";
+    colorScheme = "Yami";
     enabledExtensions = with spicePkgs.extensions; [
       adblock
 	    ];
@@ -170,8 +172,14 @@ in
      kando
      rofi-wayland
      gnumake
-
+     mangohud
+     protonup
+     tt
     ];
+    environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "\${HOME}/.steam/root/compatibilitytools.d";
+    };
 
 nixpkgs.config = {
   allowUnfree = true;
