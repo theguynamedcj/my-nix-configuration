@@ -6,7 +6,6 @@
 let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
 in
-  
 
 {
   imports =
@@ -14,8 +13,7 @@ in
       ./hardware-configuration.nix
      
     ];
-
-  
+    
   
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -97,6 +95,13 @@ in
       pointer
       ];
   };
+  programs.chromium.enablePlasmaBrowserIntegration = true;
+  programs.starship.enable = true;
+  programs.java.enable = true;
+  virtualisation.docker.enable = true;
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+  virtualisation.waydroid.enable = true;
 
   
   # List packages installed in system profile.
@@ -107,8 +112,6 @@ in
      kitty
      gedit
      btop
-     xwallpaper
-     discord
      kdePackages.dolphin
      fastfetch
      fortune
@@ -151,9 +154,6 @@ in
      ffmpeg
      nodejs
      vivaldi
-     dnf4
-     apt
-     pacman
      unzip
      inetutils
      tldr
@@ -164,10 +164,13 @@ in
      inputs.yt-x.packages."${system}".default
      yt-dlp
      jp2a
-     python312
      (python312.withPackages (ps: with ps; [
-      cmake
-	
+      pygame
+      pip
+      tqdm
+      numpy
+      pillow
+      cython
      ]))
      kando
      rofi-wayland
@@ -175,11 +178,37 @@ in
      mangohud
      protonup
      tt
+     kdePackages.plasma-browser-integration
+     cmake
+     brave
+     lavat
+     powershell
+     starship
+     kdePackages.ghostwriter    
+     jdk24
+     docker
+     distrobox
+     gcc
+     pkg-config
+     ninja
+     extra-cmake-modules
+     kdePackages.qtbase
+     obsidian
+     inputs.nur.legacyPackages.${pkgs.system}.repos.shadowrz.klassy-qt6
+     neovim
+     youtube-music
+     kdePackages.audiotube
+     file    
+     appimage-run
+     asciinema_3 
     ];
     environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\${HOME}/.steam/root/compatibilitytools.d";
     };
+
+    environment.etc."chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
+    "${pkgs.kdePackages.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
 
 nixpkgs.config = {
   allowUnfree = true;
@@ -190,7 +219,6 @@ users.defaultUserShell = pkgs.fish;
 
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-virtualisation.waydroid.enable = true;
 
 hardware.bluetooth.enable = true;
 hardware.bluetooth.powerOnBoot = true;
