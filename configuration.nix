@@ -11,13 +11,14 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-     
+      inputs.home-manager.nixosModules.default
     ];
     
   
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.device = "nodev";
 
  networking.hostName = "za-warudo"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -76,6 +77,15 @@ in
        tree
      ];
    };
+  home-manager = {
+  extraSpecialArgs = {inherit inputs;};
+  users = {
+    "ecuasv" = import ./home.nix;
+  };
+};
+  
+  
+ 
 
   programs.firefox.enable = true;
   programs.fish.enable = true;
@@ -102,7 +112,12 @@ in
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
   virtualisation.waydroid.enable = true;
-
+  programs.openvpn3.enable = true;
+  programs.zsh.enable =  true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -122,6 +137,8 @@ in
      libreoffice-qt6-fresh
      pipx
      lolcat
+     sl
+     xsnow
      figlet
      asciiquarium
      vencord
@@ -201,11 +218,16 @@ in
      file    
      appimage-run
      asciinema_3 
+     arduino
+     element
+     element-desktop
+     
     ];
     environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\${HOME}/.steam/root/compatibilitytools.d";
     };
+    
 
     environment.etc."chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
     "${pkgs.kdePackages.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
@@ -215,7 +237,7 @@ nixpkgs.config = {
   allowBroken = true;
 };
 
-users.defaultUserShell = pkgs.fish;
+users.defaultUserShell = pkgs.zsh;
 
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
