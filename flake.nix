@@ -13,8 +13,10 @@
       };  
     trmt.url = "github:cenonym/trmt";
      nur.url = "github:nix-community/NUR";
+     nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, spicetify-nix, trmt, home-manager, nur,   ... }@inputs: 
+  outputs = { self, nixpkgs, spicetify-nix, trmt, home-manager, nur, nix-snapd,  ... }@inputs: 
    
   {
        nixosConfigurations.za-warudo = nixpkgs.lib.nixosSystem {
@@ -27,11 +29,12 @@
           ./configuration.nix
           spicetify-nix.nixosModules.default
           nur.modules.nixos.default
-          
-         
-         
-        
-          ];     
+          inputs.home-manager.nixosModules.default
+           nix-snapd.nixosModules.default
+           {
+          services.snap.enable = true;
+          }
+         ];     
           specialArgs = {
           inherit inputs;
           };
