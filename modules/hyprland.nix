@@ -3,7 +3,7 @@
       enable = true;
       xwayland.enable = true;
       systemd.enable = true;
-
+      plugins = [pkgs.hyprlandPlugins.hyprbars];
 extraConfig = ''
     monitor=,preferred,auto,auto
 
@@ -18,58 +18,68 @@ extraConfig = ''
     env = HYPRCURSOR_SIZE,24
 
     general {
-        gaps_in = 5
-        gaps_out = 20
-        border_size = 2
-        col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-        col.inactive_border = rgba(595959aa)
-        resize_on_border = false
-        allow_tearing = false
-        layout = dwindle
+    gaps_in = 10
+    gaps_out = 14
+    border_size = 3
+    layout = dwindle
+    resize_on_border = true
     }
 
-    decoration {
-        rounding = 10
-        rounding_power = 2
-        active_opacity = 1.0
-        inactive_opacity = 1.0
-        shadow {
-            enabled = true
-            range = 4
-            render_power = 3
-            color = rgba(1a1a1aee)
-        }
-        blur {
-            enabled = true
-            size = 3
-            passes = 1
-            vibrancy = 0.1696
-        }
+decoration {
+    rounding = 10
+    active_opacity = 1.0
+    inactive_opacity = 0.9
+    fullscreen_opacity = 1.0
+
+    blur {
+        enabled = true
+        size = 6
+        passes = 4
+        new_optimizations = on
+        ignore_opacity = true
+        xray = true
+        blurls = waybar
     }
+
+    shadow {
+        enabled = true
+        range = 30
+        render_power = 3
+        color = 0x66000000
+    }
+}
 
     animations {
-        enabled = yes, please :)
-        bezier = easeOutQuint,0.23,1,0.32,1
-        bezier = easeInOutCubic,0.65,0.05,0.36,1
-        bezier = linear,0,0,1,1
-        bezier = almostLinear,0.5,0.5,0.75,1.0
-        bezier = quick,0.15,0,0.1,1
-        animation = global, 1, 10, default
-        animation = border, 1, 5.39, easeOutQuint
-        animation = windows, 1, 4.79, easeOutQuint
-        animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
-        animation = windowsOut, 1, 1.49, linear, popin 87%
-        animation = fadeIn, 1, 1.73, almostLinear
-        animation = fadeOut, 1, 1.46, almostLinear
-        animation = fade, 1, 3.03, quick
-        animation = layers, 1, 3.81, easeOutQuint
-        animation = layersIn, 1, 4, easeOutQuint, fade
-        animation = layersOut, 1, 1.5, linear, fade
-        animation = fadeLayersIn, 1, 1.79, almostLinear
-        animation = fadeLayersOut, 1, 1.39, almostLinear
-        animation = workspaces, 1, 1.94, almostLinear, fade
-        animation = workspacesIn, 1, 1.21, almostLinear, fade
-        animation = workspacesOut, 1, 1.94, almostLinear, fade
+        enabled = yes
+    bezier = linear, 0, 0, 1, 1
+    bezier = md3_standard, 0.2, 0, 0, 1
+    bezier = md3_decel, 0.05, 0.7, 0.1, 1
+    bezier = md3_accel, 0.3, 0, 0.8, 0.15
+    bezier = overshot, 0.05, 0.9, 0.1, 1.1
+    bezier = crazyshot, 0.1, 1.5, 0.76, 0.92 
+    bezier = hyprnostretch, 0.05, 0.9, 0.1, 1.0
+    bezier = menu_decel, 0.1, 1, 0, 1
+    bezier = menu_accel, 0.38, 0.04, 1, 0.07
+    bezier = easeInOutCirc, 0.85, 0, 0.15, 1
+    bezier = easeOutCirc, 0, 0.55, 0.45, 1
+    bezier = easeOutExpo, 0.16, 1, 0.3, 1
+    bezier = softAcDecel, 0.26, 0.26, 0.15, 1
+    bezier = md2, 0.4, 0, 0.2, 1 # use with .2s duration
+    animation = windows, 1, 3, md3_decel
+    animation = windowsIn, 1, 3, md3_decel
+    animation = windowsOut, 1, 3, md3_accel
+    animation = border, 1, 10, default
+    animation = fade, 1, 3, md3_decel
+    animation = layers, 1, 2, md3_decel, slide
+    animation = layersIn, 1, 3, menu_decel, slide
+    animation = layersOut, 1, 1.6, menu_accel
+    animation = fadeLayersIn, 1, 2, menu_decel
+    animation = fadeLayersOut, 1, 4.5, menu_accel
+    animation = workspaces, 1, 7, menu_decel, slide
+    animation = workspaces, 1, 2.5, softAcDecel, slide
+    animation = workspaces, 1, 7, menu_decel, slidefade 15%
+    animation = specialWorkspace, 1, 3, md3_decel, slidefadevert 15%
+    animation = specialWorkspace, 1, 3, md3_decel, slidevert
     }
 
     dwindle {
@@ -87,7 +97,7 @@ extraConfig = ''
     }
 
     input {
-        kb_layout = us
+        kb_layout = ng
         kb_variant =
         kb_model =
         kb_options =
@@ -107,14 +117,32 @@ extraConfig = ''
         name = epic-mouse-v1
         sensitivity = -0.5
     }
+    plugin {
+     hyprbars {
+        bar_color = rgb(242424)
+    bar_height = 30
+    bar_title_enabled = true
+    bar_text_align = center
+    bar_buttons_alignment = right
+    bar_padding = 7
+    bar_button_padding = 10
+
+    
+    hyprbars-button = rgb(fe5e56), 15, , hyprctl dispatch killactive
+    hyprbars-button = rgb(fdba2d), 15, , hyprctl dispatch fullscreen 1
+    hyprbars-button = rgb(28c640), 15, , hyprctl dispatch movetoworkspacesilent special:magic
+}
+    }
 
     $mainMod = SUPER
     $alt = ALT
     bind = $mainMod, T, exec, $terminal
     bind = $mainMod, Q, killactive,
     bind = $mainMod, E, exec, $fileManager
-    bind = $mainMod, $alt, togglefloating,
+    bind = $mainMod, M, togglefloating,
     bind = $mainMod, L, exec, hyprlock
+    bind = $mainMod, F, fullscreen, 0
+    bind = $mainMod SHIFT, F, fullscreen, 1
     bind = bind = SUPER, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
     bind = $mainMod, R, exec, $menu
     bind = $mainMod, P, pseudo,
@@ -167,12 +195,46 @@ bindel = ,XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume -
 
     windowrule = suppressevent maximize, class:.*
     windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+    windowrule = float,class:(.*org.pulseaudio.pavucontrol.*)
+    windowrule = size 700 600,class:(.*org.pulseaudio.pavucontrol.*)
+    windowrule = center,class:(.*org.pulseaudio.pavucontrol.*)
+    windowrule = pin,class:(.*org.pulseaudio.pavucontrol.*)
+    layerrule = blur, swaync-control-center
+    layerrule = blur, swaync-notification-window
+    layerrule = ignorezero, swaync-control-center
+    layerrule = ignorezero, swaync-notification-window
+    layerrule = ignorealpha 0.5, swaync-control-center
+    layerrule = ignorealpha 0.5, swaync-notification-window
+    env = MOZ_ENABLE_WAYLAND,1
+    env = QT_QPA_PLATFORM,wayland;xcb
+    env = QT_QPA_PLATFORMTHEME,qt6ct
+    env = QT_QPA_PLATFORMTHEME,qt5ct
+    env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+    env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+
+    windowrule = tile, title:^(Microsoft-edge)$ 
+    windowrule = tile, title:^(Brave-browser)$
+    windowrule = tile, title:^(Chromium)$
+    windowrule = float, title:^(pavucontrol)$
+    windowrule = float, title:^(blueman-manager)$
+    windowrule = float, title:^(nm-connection-editor)$
+    windowrule = float, title:^(qalculate-gtk)$
+    windowrule = float, title:^(Picture-in-Picture)$
+    windowrule = pin, title:^(Picture-in-Picture)$
+    windowrule = move 69.5% 4%, title:^(Picture-in-Picture)$
+    windowrule = idleinhibit fullscreen,class:([focus])
 
     exec-once = bash ~/.config/hypr/start.sh
     exec-once = systemctl --user start hyprpolkitagent
     exec-once = wl-paste --type text --watch cliphist store
     exec-once = wl-paste --type image --watch cliphist store 
     exec-once = systemctl --user enable --now hypridle.service 
+    exec-once = waybar &
+    exec-once = swaync
+    exec-once = hyprctl setcursor Bibata-Modern-Ice 24
+    exec-once = hypridle
+    exec-once = nm-applet
+    exec-once = blueman-adapters
   '';
 
 

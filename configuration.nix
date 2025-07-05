@@ -14,7 +14,7 @@ in
       inputs.home-manager.nixosModules.default
     ];
     
-  
+  services.blueman.enable = true;
  boot = {
   loader = {
     systemd-boot.enable = false; # disable systemd-boot
@@ -59,18 +59,28 @@ in
   services = {
   xserver = {
     enable = true;
-    desktopManager.cinnamon.enable = true;
-    displayManager.sddm = {
-      enable = true;
-      theme = "sddm-astronaut";
-    };
   };
-  cinnamon.apps.enable = true;
+   services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 }; 
 
+
+xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    config = {
+      common.default = ["gtk"];
+      hyprland.default = ["gtk" "hyprland"];
+    };
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+};
   
    services.xserver.xkb.layout = "ng"; # leave the way it is
    services.flatpak.enable = true; #flatpak support
+   services.hypridle.enable = true; # hypridle support
   # services.xserver.xkb.options = "eurosign:e,caps:escape"; # dont touch
 
 
@@ -108,10 +118,10 @@ in
   users = {
     "ecuasv" = import ./home.nix;
   };
-};
+  };
   
   
- 
+ services.playerctld.enable = true; # playerctl support for media controls
 
   programs.firefox.enable = true; # keep firefox no matter what
   programs.fish.enable = true; # fish shell
@@ -157,7 +167,8 @@ in
     enable = true; # hyprland wm
     xwayland.enable = true; # xwayland bridge
   };
-
+ xdg.mime.enable = true;
+  xdg.menus.enable = true;
 
 
   
@@ -267,53 +278,77 @@ in
      krita
      inkscape
      gimp3
-     
-
-
-
-
+     jq
+     hyprshade
+     qalculate-gtk
+     git
+     wlogout
+     playerctl
+     kdePackages.kservice
+     kdePackages.dolphin
+     kdePackages.kio
+     kdePackages.kdf
+     kdePackages.kio-fuse
+     kdePackages.kio-extras
+     kdePackages.kio-admin
+     kdePackages.qtwayland
+     kdePackages.plasma-integration
+     kdePackages.kdegraphics-thumbnailers
+     kdePackages.breeze-icons
+     kdePackages.qtsvg
+     shared-mime-info
+     nautilus
+    inputs.nh.packages.${pkgs.system}.default
+    kdePackages.qt6ct
     ];
+
+
+    fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fantasque-sans-mono
+
+];
     environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\${HOME}/.steam/root/compatibilitytools.d";
     }; # path for proton GE
-    
+     environment.etc."/xdg/menus/applications.menu".text = builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
     environment.etc."chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
     "${pkgs.kdePackages.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json"; # specify path for plasma integration for vivaldi
 
-nixpkgs.config = {
-  allowUnfree = true; # allow unfree liscensed software
-  allowBroken = true; # allow broken packages
-};
+  nixpkgs.config = {
+    allowUnfree = true; # allow unfree liscensed software
+    allowBroken = true; # allow broken packages
+  };
 
-users.defaultUserShell = pkgs.zsh; # set default shell
+  users.defaultUserShell = pkgs.zsh; # set default shell
 
-nix.settings = { 
+  nix.settings = { 
   experimental-features = [ "nix-command" "flakes" ]; 
   }; # enable flakes
 
 
-hardware.bluetooth.enable = true; # bluetooth
-hardware.bluetooth.powerOnBoot = true; # bluetooth on startup
+  hardware.bluetooth.enable = true; # bluetooth
+  hardware.bluetooth.powerOnBoot = true; # bluetooth on startup
 
-nix.gc = {
+  nix.gc = {
                 automatic = true; # enable garbage collection for saving space
                 dates = "weekly"; # run it weekly
                 options = "--delete-older-than 7d"; # delete old gens after 7 days
-};
+  };
 
 
-system.autoUpgrade = {
+  system.autoUpgrade = {
       enable = true; # enable auto update for software
       dates = "weekly"; # do it weekly
-};
+  };
 
 
-boot.kernel.sysctl = { "vm.swappiness" = 10;}; # set swappiness for better performance
+  boot.kernel.sysctl = { "vm.swappiness" = 10;}; # set swappiness for better performance
 
 
-
+nixpkgs.config.allowUnsupportedSystem = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

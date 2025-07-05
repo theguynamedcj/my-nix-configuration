@@ -15,8 +15,11 @@
      nur.url = "github:nix-community/NUR";
      nix-snapd.url = "github:nix-community/nix-snapd";
     nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+      nh.url = "github:viperML/nh";
+    nh.inputs.nixpkgs.follows = "nixpkgs";
+
   };
-  outputs = { self, nixpkgs, spicetify-nix, trmt, home-manager, nur, nix-snapd,  ... }@inputs: 
+  outputs = { self, nixpkgs, spicetify-nix, trmt, home-manager, nur, nix-snapd, nh, ... }@inputs: 
    
   {
        nixosConfigurations.za-warudo = nixpkgs.lib.nixosSystem {
@@ -31,9 +34,17 @@
           nur.modules.nixos.default
           inputs.home-manager.nixosModules.default
            nix-snapd.nixosModules.default
+          
            {
           services.snap.enable = true;
-          }
+           programs.nh = {
+            enable = true;
+            clean.enable = true;
+            clean.extraArgs = "--keep-since 4d --keep 3";
+            flake = "/etc/nixos/";
+          };
+           }
+          
          ];     
           specialArgs = {
           inherit inputs;

@@ -23,6 +23,8 @@ in
     ./modules/rofi.nix # rofi config
     ./modules/sway.nix # sway config
     ./modules/cursor.nix # cursor
+    ./modules/hyprlock.nix # locking app
+    ./modules/hypridle.nix # hyprland idle management daemon
   ];
 
   home.stateVersion = "25.05"; # DONT TOUCH
@@ -56,8 +58,17 @@ nixpkgs.config.allowUnfree = true;
     hyprsunset
     hyprpolkitagent
     cliphist
+    blueman
+    swaynotificationcenter
+    networkmanagerapplet
+    waypaper
+ 
+
 
   ];
+
+
+
 
 }
 

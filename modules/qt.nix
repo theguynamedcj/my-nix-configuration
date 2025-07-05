@@ -1,10 +1,11 @@
-{
-  qt = {
+{config, pkgs, ...}:{
+qt = {
   enable = true;
-  platformTheme = "gtk";
+  platformTheme = "adwaita";
   style = {
-    name = "Klassy";
- };
+    name = "adwaita-dark";
+  };
 };
+
 
 }
