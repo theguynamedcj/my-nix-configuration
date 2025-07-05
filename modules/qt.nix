@@ -1,11 +1,10 @@
 {config, pkgs, ...}:{
 qt = {
   enable = true;
-  platformTheme = "adwaita";
-  style = {
-    name = "adwaita-dark";
-  };
+  platformTheme = "qtct";
+  style = "adwaita-dark";
 };
+
 
 
 }
