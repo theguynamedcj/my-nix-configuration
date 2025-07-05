@@ -16,6 +16,8 @@ in
     
   services.blueman.enable = true;
  boot = {
+  kernelParams = [ "resume_offset=23564288" ];
+  resumeDevice = "/dev/disk/by-uuid/af477bf1-82f0-4e93-bb9b-a263e6b24b1b";
   loader = {
     systemd-boot.enable = false; # disable systemd-boot
     grub = {
