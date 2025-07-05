@@ -13,7 +13,7 @@
     };
     
   };
-  extraConfig = {
+  settings = {
       gtk-application-prefer-dark-theme = true;
   };
 
