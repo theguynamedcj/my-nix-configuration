@@ -1,11 +1,9 @@
 {
   programs.wlogout = {
     enable = true;
-
-  };
-  style = ''
+    style = ''
     * {
-  font-family: DaddyTimeMono Nerd Font;
+  font-family: AnonymicePro Nerd Font;
   background-image: none;
   box-shadow: none;
   transition: 20ms;
@@ -75,4 +73,6 @@ button:hover {
 }
   '';
 
+  };
+  
 }
