@@ -6,7 +6,8 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
         nhs = "nh os switch /etc/nixos/ ";
-        git add . = "git add .";
+        git add . = "doas git add .";
+        git push = "doas git push";
         
     };
   };
