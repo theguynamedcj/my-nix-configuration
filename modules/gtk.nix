@@ -5,7 +5,7 @@
     enable = true;
     theme = {
       name = "adwaita-dark";
-      package = pkgs.gnome.adwaita-theme;
+      package = pkgs.adwaita-theme;
     };
     iconTheme = {
       package = pkgs.papirus-icon-theme; 
