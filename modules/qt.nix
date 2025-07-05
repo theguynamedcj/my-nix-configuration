@@ -2,7 +2,9 @@
 qt = {
   enable = true;
   platformTheme = "qtct";
-  style = "adwaita-dark";
+  style = {
+    name = "adwaita-dark";
+  };
 };
 
 
