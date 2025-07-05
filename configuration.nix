@@ -343,7 +343,12 @@ xdg.portal = {
       enable = true; # enable auto update for software
       dates = "weekly"; # do it weekly
   };
-
+swapDevices = [
+  {
+    device = "/swapfile";
+    size = 8192; 
+  }
+];
 
   boot.kernel.sysctl = { "vm.swappiness" = 10;}; # set swappiness for better performance
 
