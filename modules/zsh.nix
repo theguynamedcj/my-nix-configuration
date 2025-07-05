@@ -5,7 +5,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-        nhs = "nh os switch /etc/nixos/ ";
+        nhs = "doas nh os switch /etc/nixos/ ";
     };
   };
 }
