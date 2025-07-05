@@ -129,8 +129,6 @@ decoration {
 
     
     hyprbars-button = rgb(fe5e56), 15, , hyprctl dispatch killactive
-    hyprbars-button = rgb(fdba2d), 15, , hyprctl dispatch fullscreen 1
-    hyprbars-button = rgb(28c640), 15, , hyprctl dispatch movetoworkspacesilent special:magic
 }
     }
 
