@@ -27,9 +27,9 @@ extraConfig = ''
 
 decoration {
     rounding = 10
-    active_opacity = 1.0
+    active_opacity = 0.9
     inactive_opacity = 0.9
-    fullscreen_opacity = 1.0
+    fullscreen_opacity = 0.9
 
     blur {
         enabled = true
@@ -151,6 +151,7 @@ decoration {
     bind = $mainMod, D, exec, $chat
     bind = , Print, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)"
     bind = $alt, TAB, exec, ${pkgs.rofi}/bin/rofi -show window
+    bind = $mainMod, delete, exec, wlogout
     bind = $mainMod, C, exec, hyprpicker
     bind = $mainMod, left, movefocus, l
     bind = $mainMod, right, movefocus, r
