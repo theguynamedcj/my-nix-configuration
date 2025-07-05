@@ -24,8 +24,8 @@
     enable = true;
     settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark"; # This sets the system-wide dark preference
-      gtk-theme = "Adwaita-dark"; # Redundant if home.gtk.theme is set, but can be a fallback
+      color-scheme = "prefer-dark"; 
+      gtk-theme = "Adwaita-dark"; 
       icon-theme = "Adwaita";
     };
     };
