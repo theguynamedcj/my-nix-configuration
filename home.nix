@@ -1,10 +1,5 @@
 { config, pkgs, lib, inputs, ... }:
 
-let
-
-  modifier = config.wayland.windowManager.sway.config.modifier;
-
-in
 
 {
   imports = [
@@ -21,7 +16,6 @@ in
     ./modules/gtk.nix # gtk config
     ./modules/mako.nix # mako config
     ./modules/rofi.nix # rofi config
-    ./modules/sway.nix # sway config
     ./modules/cursor.nix # cursor
     ./modules/hyprlock.nix # locking app
     ./modules/hypridle.nix # hyprland idle management daemon

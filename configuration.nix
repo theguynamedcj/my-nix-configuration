@@ -31,9 +31,11 @@ in
   };
   plymouth = {
     enable = true; # theming the boot screen
-    theme = "blahaj"; # theme repo
+    theme = "rings"; # theme repo
     themePackages = with pkgs; [
-      plymouth-blahaj-theme # theme package
+       (adi1090x-plymouth-themes.override {
+          selected_themes = [ "rings" ];
+        }) # theme package
     ];
   };
 };
@@ -63,7 +65,6 @@ in
     enable = true;
   };
    displayManager.gdm.enable = true;
-  desktopManager.gnome.enable = true;
 }; 
 
 
@@ -159,12 +160,7 @@ xdg.portal = {
     enable = true; # for graphics support
     enable32Bit = true; # 32 bit support
   };
-  programs.sway = {
-    enable = true; # sway wm
-    wrapperFeatures = {
-      gtk = true; # gtk support for sway
-    };
-  };
+
 
  programs.hyprland = {
     enable = true; # hyprland wm
@@ -224,7 +220,6 @@ xdg.portal = {
      wineWowPackages.stable
      ffmpeg
      nodejs
-     vivaldi
      unzip
      inetutils
      tldr
@@ -303,6 +298,7 @@ xdg.portal = {
      nautilus
     inputs.nh.packages.${pkgs.system}.default
     kdePackages.qt6ct
+    efibootmgr 
     ];
 
 
