@@ -24,10 +24,10 @@ in
       enable = true; # enable grub
       device = "nodev"; # use no device for grub
       efiSupport = true; # uefi devices
-      timeoutStyle = "hidden"; # hide timeout
+     # timeoutStyle = "hidden"; # hide timeout
     };
     efi.canTouchEfiVariables = true; # allow edit efi variables
-    timeout = 0; # set timeout
+    timeout = 5; # set timeout
   };
   plymouth = {
     enable = true; # theming the boot screen
@@ -267,6 +267,7 @@ xdg.portal = {
      file    
      appimage-run
      asciinema_3 
+     vivaldi
      arduino
      element
      element-desktop
