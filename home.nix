@@ -3,7 +3,6 @@
 
 {
   imports = [
-    ./modules/hyprland.nix #hyprland config
     ./modules/fish.nix #fish config
     ./modules/fastfetch.nix # fastfetch config
     ./modules/git.nix # git config
