@@ -129,7 +129,7 @@ xdg.portal = {
 
   programs.firefox.enable = true; # keep firefox no matter what
   programs.fish.enable = true; # fish shell
-  programs.steam={
+  programs.steam = {
         enable = true; # enable steam
         gamescopeSession.enable = true; # for optmized gaming
   };
@@ -162,10 +162,7 @@ xdg.portal = {
   };
 
 
- programs.hyprland = {
-    enable = true; # hyprland wm
-    xwayland.enable = true; # xwayland bridge
-  };
+ programs.niri.enable = true;
  xdg.mime.enable = true;
   xdg.menus.enable = true;
 
@@ -300,6 +297,8 @@ xdg.portal = {
     inputs.nh.packages.${pkgs.system}.default
     kdePackages.qt6ct
     efibootmgr 
+    afetch
+
     ];
 
 
