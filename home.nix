@@ -19,6 +19,7 @@
     ./modules/hyprlock.nix # locking app
     ./modules/hypridle.nix # hyprland idle management daemon
     ./modules/wlogout.nix # wlogout config
+    ./modules/hyprland.nix # hyprland config
   ];
 
   home.stateVersion = "25.05"; # DONT TOUCH
